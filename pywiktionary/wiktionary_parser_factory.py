@@ -19,7 +19,7 @@ LANGUAGE_PARSERS = {
 }
 
 
-class WiktionaryParser:
+class WiktionaryParserFactory:
     def __init__(self, default_language='en', parser_class=None):
         self._base_url = 'https://{lang_code}.wiktionary.org/w/api.php?format=json&action=query&prop=extracts&titles={page_title}'
         self.default_language = LANGUAGE_CODES[default_language] if default_language in LANGUAGE_CODES else 'en'
