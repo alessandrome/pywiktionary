@@ -34,7 +34,7 @@ class WiktionaryParser:
     def get_page(self, title, language=None):
         if not language or language not in LANGUAGE_CODES:
             language = self.default_language
-        return requests.get(self._format_url(title, language))
+        return self.parser_class(requests.get(self._format_url(title, language)).json())
 
     def _format_url(self, title, language):
         return self._base_url.format(lang_code=language, page_title=title)
