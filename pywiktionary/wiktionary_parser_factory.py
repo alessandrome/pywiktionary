@@ -35,7 +35,7 @@ class WiktionaryParserFactory:
     def get_page(self, title, language=None):
         if not language or language not in LANGUAGE_CODES:
             language = self.default_language
-        wiktionary_response = requests.get(self._format_url(title, language)).json()
+        wiktionary_response = requests.get(self._format_url(language=language, title=title)).json()
         parsers = {}
         for page_id in wiktionary_response["query"]["pages"]:
             if not page_id.startswith('-'):
@@ -46,5 +46,5 @@ class WiktionaryParserFactory:
             "parsers": parsers
         }
 
-    def _format_url(self, title, language):
+    def _format_url(self, language, title):
         return self._base_url.format(lang_code=language, page_title=title)
