@@ -1,6 +1,6 @@
 import unittest
 from unittest import mock
-from pywiktionary import wiktionary_parser_factory
+from pywiktionary.wiktionary_parser_factory import WiktionaryParserFactory
 from pywiktionary.parsers import english_parser
 from requests.exceptions import RequestException
 
@@ -19,8 +19,7 @@ def mocked_requests_get(*args, **kwargs):
         return MockResponse(mocked_pizza_json_response(), 200)
     elif args[0] == 'https://en.wiktionary.org/w/api.php?format=json&action=query&prop=extracts&titles=page_not_found':
         return MockResponse(mocked_page_not_found_json_response(), 200)
-
-    return MockResponse(None, 500)
+    raise RequestException()
 
 
 def mocked_pizza_json_response():
@@ -83,13 +82,7 @@ class WiktionaryParserFactoryTestCase(unittest.TestCase):
 
     # We patch 'requests.get' with our own method. The mock object is passed in to our test case method.
     @mock.patch('requests.get', side_effect=mocked_requests_get)
-    def test_request_fail(self):
-        parser_factory = WiktionaryParserFactory()
-        self.assertRaises(RequestException, parser_factory.get_page('request_error'))
-
-    # We patch 'requests.get' with our own method. The mock object is passed in to our test case method.
-    @mock.patch('requests.get', side_effect=mocked_requests_get)
-    def test_request_success(self):
+    def test_request_success(self, magic_mock):
         parser_factory = WiktionaryParserFactory('en')
         result = parser_factory.get_page('pizza')
         expected_json_result = mocked_pizza_json_response()
@@ -100,18 +93,7 @@ class WiktionaryParserFactoryTestCase(unittest.TestCase):
 
     # We patch 'requests.get' with our own method. The mock object is passed in to our test case method.
     @mock.patch('requests.get', side_effect=mocked_requests_get)
-    def test_request_success(self):
-        parser_factory = WiktionaryParserFactory('en')
-        result = parser_factory.get_page('pizza')
-        expected_json_result = mocked_pizza_json_response()
-        self.assertEqual("response" in result, True)
-        self.assertEqual("parsers" in result, True)
-        self.assertDictEqual(result["response"], expected_json_result)
-        self.assertEqual("pizza" in result["parsers"], True)
-
-    # We patch 'requests.get' with our own method. The mock object is passed in to our test case method.
-    @mock.patch('requests.get', side_effect=mocked_requests_get)
-    def test_request_page_not_found(self):
+    def test_request_page_not_found(self, magic_mock):
         parser_factory = WiktionaryParserFactory('en')
         result = parser_factory.get_page('page_not_found')
         expected_json_result = mocked_page_not_found_json_response()
