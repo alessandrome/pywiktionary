@@ -20,21 +20,31 @@ LANGUAGE_PARSERS = {
 
 
 class WiktionaryParserFactory:
-    def __init__(self, default_language='en', parser_class=None):
+    def __init__(self, default_language='en', default_parser_class=None):
+        # TODO: Raise an exception when a language not implemented yet has been passed AND the default parser class is not passed
         self._base_url = 'https://{lang_code}.wiktionary.org/w/api.php?format=json&action=query&prop=extracts&titles={page_title}'
-        self.default_language = LANGUAGE_CODES[default_language] if default_language in LANGUAGE_CODES else 'en'
-        if parser_class:
-            self.parser_class = parser_class
+        self.default_language = LANGUAGE_CODES[default_language] if default_language in LANGUAGE_CODES else default_language
+        if default_parser_class:
+            self.default_parser_class = default_parser_class
         else:
             if self.default_language in LANGUAGE_PARSERS:
-                self.parser_class = LANGUAGE_PARSERS[self.default_language]
+                self.default_parser_class = LANGUAGE_PARSERS[self.default_language]
             else:
-                self.parser_class = pywiktionary.parsers.basic_parser.BasicParser
+                self.default_parser_class = pywiktionary.parsers.basic_parser.BasicParser
 
     def get_page(self, title, language=None):
         if not language or language not in LANGUAGE_CODES:
             language = self.default_language
-        return self.parser_class(requests.get(self._format_url(title, language)).json())
+        wiktionary_response = requests.get(self._format_url(title, language)).json()
+        parsers = {}
+        for page_id in wiktionary_response["query"]["pages"]:
+            if not page_id.startswith('-'):
+                page_data = wiktionary_response["query"]["pages"][page_id]
+                parsers[page_data["title"]] = self.default_parser_class(page_data["extract"])
+        return {
+            "response": wiktionary_response,
+            "parsers": parsers
+        }
 
     def _format_url(self, title, language):
         return self._base_url.format(lang_code=language, page_title=title)
