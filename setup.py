@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pywiktionary",
-    version="0.0.a1",
+    version="0.0.a2",
     author="Alessandro Mesti",
     author_email="mesti.alessandro@gmail.com",
     description="Python library to retrieve wiktionary word definitions for different languages",
