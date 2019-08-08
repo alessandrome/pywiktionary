@@ -1,5 +1,7 @@
 from . import basic_parser
 from bs4 import BeautifulSoup
+import copy
+
 
 SECTION_ID = {
     'noun': 'Sostantivo',
@@ -37,16 +39,18 @@ class ItalianParser(basic_parser.BasicParser):
 
     def _get_meanings(self, soup, meaning_types=list(SECTION_ID.keys()), get_examples=True, get_empty_meaning_types=False):
         meanings = {}
+        soup_copy = copy.copy(soup)
         for meaning_type in meaning_types:
             if meaning_type in SECTION_ID:
                 meaning_list = []
-                title = soup.find(id=SECTION_ID[meaning_type])
+                title = soup_copy.find(id=SECTION_ID[meaning_type])
                 if title:
                     for li_meaning in title.find_next('ol').find_all('li', recursive=False):
                         examples = []
-                        if get_examples:
-                            example_list = li_meaning.find('ul')
-                            if example_list:
+                        example_list = li_meaning.find('ul')
+                        if example_list:
+                            example_list = example_list.extract()
+                            if get_examples:
                                 for li_example in example_list.find_all('li'):
                                     examples.append(li_example.text)
                         meaning_list.append({
