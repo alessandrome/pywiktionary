@@ -52,7 +52,8 @@ class ItalianParser(basic_parser.BasicParser):
                             example_list = example_list.extract()
                             if get_examples:
                                 for li_example in example_list.find_all('li'):
-                                    examples.append(li_example.text)
+                                    if li_example.text.rstrip():
+                                        examples.append(li_example.text.rstrip())
                         meaning_list.append({
                             'meaning': li_meaning.text.rstrip(),
                             'examples': examples
