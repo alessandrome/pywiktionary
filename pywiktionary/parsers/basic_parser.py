@@ -1,6 +1,10 @@
+from bs4 import BeautifulSoup
+
+
 class BasicParser:
-    def __init__(self, wiktionary_json):
-        self.wiktionary_json = wiktionary_json
+    def __init__(self, html):
+        self.html = html
+        self.soup = BeautifulSoup(html, 'html.parser')
 
     def parse(self):
         raise NotImplementedError()
