@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pywiktionary",
-    version="0.0.a1",
+    version="0.0.a2",
     author="Alessandro Mesti",
     author_email="mesti.alessandro@gmail.com",
     description="Python library to retrieve wiktionary word definitions for different languages",
@@ -18,11 +18,15 @@ setuptools.setup(
         )
     ),
     packages=setuptools.find_packages(),
+    keywords="wiktionary parser word words multilingual",
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Development Status :: 2 - Pre-Alpha",
-        "Intended Audience :: Developers"
+        "Intended Audience :: Developers",
+        "Topic :: Text Processing",
+        "Topic :: Text Processing :: Linguistic",
+        "Topic :: Text Processing :: Markup :: HTML"
     ],
 )
