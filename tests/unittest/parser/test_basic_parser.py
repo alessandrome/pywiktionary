@@ -14,7 +14,7 @@ class BasicParseTestCase(unittest.TestCase):
         self.assertEqual(get_pizza_html_extract(), parser.html)
 
     def test_parse_method(self):
-        parser = basic_parser.BasicParser({})
+        parser = basic_parser.BasicParser(get_pizza_html_extract())
         self.assertRaises(NotImplementedError, parser.parse)
 
 

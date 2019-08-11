@@ -1,5 +1,5 @@
 import unittest
-from pywiktionary.parsers import italian_parser
+from pywiktionary.parsers import english_parser
 
 
 def get_pizza_html_extract():
@@ -33,11 +33,11 @@ def get_pizza_parse_result():
 
 class EnglishParserTestCase(unittest.TestCase):
     def test_get_meanings(self):
-        parser = italian_parser.ItalianParser(get_pizza_html_extract())
+        parser = english_parser.EnglishParser(get_pizza_html_extract())
         self.assertDictEqual(parser.get_meanings(), get_pizza_meanings_result())
 
     def test_parsing(self):
-        parser = italian_parser.ItalianParser(get_pizza_html_extract())
+        parser = english_parser.EnglishParser(get_pizza_html_extract())
         self.assertDictEqual(parser.parse(), get_pizza_parse_result())
 
 
