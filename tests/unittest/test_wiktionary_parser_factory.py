@@ -1,8 +1,14 @@
 import unittest
 from unittest import mock
 from pywiktionary.wiktionary_parser_factory import WiktionaryParserFactory
+from pywiktionary.parsers import basic_parser
 from pywiktionary.parsers import english_parser
 from requests.exceptions import RequestException
+
+
+class CustomParser(basic_parser.BasicParser):
+    def parse(self):
+        return {'meanings': {}}
 
 
 # This method will be used by the mock to replace requests.get
@@ -74,6 +80,18 @@ class WiktionaryParserFactoryTestCase(unittest.TestCase):
         parser_factory = WiktionaryParserFactory()
         self.assertEqual(parser_factory.default_language, 'en')
         self.assertEqual(parser_factory.default_parser_class, english_parser.EnglishParser)
+
+    def test_custom_parser_class_parser_factory(self):
+        parser_factory = WiktionaryParserFactory(default_parser_class=CustomParser)
+        self.assertEqual(parser_factory.default_parser_class, CustomParser)
+
+    def test_default_parser_class_parser_factory_on_unimplemented_language(self):
+        parser_factory = WiktionaryParserFactory(default_language='falselanguage')
+        self.assertEqual(parser_factory.default_language, 'falselanguage')
+        self.assertEqual(parser_factory.default_parser_class, basic_parser.BasicParser)
+        parser_factory = WiktionaryParserFactory(default_language='falselanguage', default_parser_class=CustomParser)
+        self.assertEqual(parser_factory.default_language, 'falselanguage')
+        self.assertEqual(parser_factory.default_parser_class, CustomParser)
 
     def test_url_format(self):
         parser_factory = WiktionaryParserFactory()
