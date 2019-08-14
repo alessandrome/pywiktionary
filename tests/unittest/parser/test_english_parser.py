@@ -3,7 +3,7 @@ from pywiktionary.parsers import english_parser
 
 
 def get_pizza_html_extract():
-    with open('../../file/html-responses/pizza-en.html', 'r', encoding='utf-8') as pizza_html_file:
+    with open('tests/file/html-responses/pizza-en.html', 'r', encoding='utf-8') as pizza_html_file:
         pizza_html = pizza_html_file.read()
     return pizza_html
 

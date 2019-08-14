@@ -2,8 +2,8 @@ import unittest
 from pywiktionary.parsers import italian_parser
 
 
-def get_pizza_html_extract():
-    with open('../../file/html-responses/pizza-it.html', 'r', encoding='utf-8') as pizza_html_file:
+def get_pizza_it_html_extract():
+    with open('tests/file/html-responses/pizza-it.html', 'r', encoding='utf-8') as pizza_html_file:
         pizza_html = pizza_html_file.read()
     return pizza_html
 
@@ -55,7 +55,7 @@ class ItalianParserTestCase(unittest.TestCase):
         self.assertDictEqual(parser.get_meanings(), get_pizza_meanings_result())
 
     def test_parsing(self):
-        parser = italian_parser.ItalianParser(get_pizza_html_extract())
+        parser = italian_parser.ItalianParser(html=get_pizza_it_html_extract())
         self.assertDictEqual(parser.parse(), get_pizza_parse_result())
 
 
