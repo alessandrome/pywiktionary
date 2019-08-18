@@ -80,5 +80,6 @@ class ItalianParserTestCase(unittest.TestCase):
         parser = italian_parser.ItalianParser(html=get_pizza_it_html_extract())
         self.assertListEqual(list(parser.get_meanings(get_empty_meaning_types=True).keys()), list(italian_parser.SECTION_ID.keys()))
 
+
 if __name__ == '__main__':
     unittest.main()
