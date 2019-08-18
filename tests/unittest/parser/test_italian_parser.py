@@ -8,6 +8,12 @@ def get_pizza_it_html_extract():
     return pizza_html
 
 
+def get_pizza_en_html_extract():
+    with open('tests/file/html-responses/pizza-en.html', 'r', encoding='utf-8') as pizza_html_file:
+        pizza_html = pizza_html_file.read()
+    return pizza_html
+
+
 def get_pizza_meanings_result():
     return {
         "noun": [
@@ -43,6 +49,10 @@ def get_pizza_meanings_result():
     }
 
 
+def get_empty_parse_result():
+    return {"meanings": {}}
+
+
 def get_pizza_parse_result():
     return {
         "meanings": get_pizza_meanings_result()
@@ -51,13 +61,24 @@ def get_pizza_parse_result():
 
 class ItalianParserTestCase(unittest.TestCase):
     def test_get_meanings(self):
-        parser = italian_parser.ItalianParser(get_pizza_html_extract())
+        parser = italian_parser.ItalianParser(html=get_pizza_it_html_extract())
         self.assertDictEqual(parser.get_meanings(), get_pizza_meanings_result())
+
+    def test_empty_html_parsing(self):
+        parser = italian_parser.ItalianParser(html=None)
+        self.assertRaises(ValueError, parser.parse)
 
     def test_parsing(self):
         parser = italian_parser.ItalianParser(html=get_pizza_it_html_extract())
         self.assertDictEqual(parser.parse(), get_pizza_parse_result())
 
+    def test_parsing_different_language(self):
+        parser = italian_parser.ItalianParser(html=get_pizza_en_html_extract())
+        self.assertDictEqual(parser.parse(), get_empty_parse_result())
+
+    def test_return_empty_meaning_types(self):
+        parser = italian_parser.ItalianParser(html=get_pizza_it_html_extract())
+        self.assertListEqual(list(parser.get_meanings(get_empty_meaning_types=True).keys()), list(italian_parser.SECTION_ID.keys()))
 
 if __name__ == '__main__':
     unittest.main()
