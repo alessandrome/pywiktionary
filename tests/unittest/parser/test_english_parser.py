@@ -43,7 +43,7 @@ def get_pizza_parse_result():
 
 class EnglishParserTestCase(unittest.TestCase):
     def test_get_meanings(self):
-        parser = english_parser.EnglishParser(get_pizza_en_html_extract())
+        parser = english_parser.EnglishParser(html=get_pizza_en_html_extract())
         self.assertDictEqual(parser.get_meanings(), get_pizza_meanings_result())
 
     def test_empty_html_parsing(self):
@@ -51,11 +51,11 @@ class EnglishParserTestCase(unittest.TestCase):
         self.assertRaises(ValueError, parser.parse)
 
     def test_parsing(self):
-        parser = english_parser.EnglishParser(get_pizza_en_html_extract())
+        parser = english_parser.EnglishParser(html=get_pizza_en_html_extract())
         self.assertDictEqual(parser.parse(), get_pizza_parse_result())
 
     def test_parsing_different_language(self):
-        parser = english_parser.EnglishParser(html=get_pizza_en_html_extract())
+        parser = english_parser.EnglishParser(html=get_pizza_it_html_extract())
         self.assertDictEqual(parser.parse(), get_empty_parse_result())
 
     def test_return_empty_meaning_types(self):
