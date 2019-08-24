@@ -96,7 +96,7 @@ class WiktionaryParserFactoryTestCase(unittest.TestCase):
     def test_url_format(self):
         parser_factory = WiktionaryParserFactory()
         formatted = parser_factory._format_url('en', 'page_title')
-        self.assertEqual(formatted, 'https://en.wiktionary.org/w/api.php?format=json&action=query&prop=extracts&titles=page_title')
+        self.assertEqual(formatted, 'https://en.wiktionary.org/w/index.php?printable=yes&title=page_title')
 
     # We patch 'requests.get' with our own method. The mock object is passed in to our test case method.
     @mock.patch('requests.get', side_effect=mocked_requests_get)
