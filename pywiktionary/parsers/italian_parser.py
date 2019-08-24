@@ -39,27 +39,31 @@ class ItalianParser(basic_parser.BasicParser):
 
     def _get_meanings(self, soup, meaning_types=list(SECTION_ID.keys()), get_examples=True, get_empty_meaning_types=False):
         meanings = {}
-        soup_copy = copy.copy(soup)
-        for meaning_type in meaning_types:
-            if meaning_type in SECTION_ID:
-                meaning_list = []
-                title = soup_copy.find(id=SECTION_ID[meaning_type])
-                if title:
-                    for li_meaning in title.find_next('ol').find_all('li', recursive=False):
-                        examples = []
-                        example_list = li_meaning.find('ul')
-                        if example_list:
-                            example_list = example_list.extract()
-                            if get_examples:
-                                for li_example in example_list.find_all('li'):
-                                    if li_example.text.rstrip():
-                                        examples.append(li_example.text.rstrip())
-                        meaning_list.append({
-                            'meaning': li_meaning.text.rstrip(),
-                            'examples': examples
-                        })
-                if get_empty_meaning_types or meaning_list:
-                    meanings[meaning_type] = meaning_list
+        if get_empty_meaning_types:
+            for meaning_type in list(SECTION_ID.keys()):
+                meanings[meaning_type] = []
+        if soup:
+            soup_copy = copy.copy(soup)
+            for meaning_type in meaning_types:
+                if meaning_type in SECTION_ID:
+                    meaning_list = []
+                    title = soup_copy.find(id=SECTION_ID[meaning_type])
+                    if title:
+                        for li_meaning in title.find_next('ol').find_all('li', recursive=False):
+                            examples = []
+                            example_list = li_meaning.find('ul')
+                            if example_list:
+                                example_list = example_list.extract()
+                                if get_examples:
+                                    for li_example in example_list.find_all('li'):
+                                        if li_example.text.rstrip():
+                                            examples.append(li_example.text.rstrip())
+                            meaning_list.append({
+                                'meaning': li_meaning.text.rstrip(),
+                                'examples': examples
+                            })
+                    if get_empty_meaning_types or meaning_list:
+                        meanings[meaning_type] = meaning_list
         return meanings
 
     def _get_language_soup(self, language_section_id):
