@@ -48,3 +48,7 @@ class WiktionaryParserFactory:
 
     def _format_url(self, language, title):
         return self._base_url.format(lang_code=language, page_title=title)
+
+
+class PageNotFoundException(requests.RequestException):
+    pass
