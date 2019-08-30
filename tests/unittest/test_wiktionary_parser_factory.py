@@ -15,12 +15,9 @@ class CustomParser(basic_parser.BasicParser):
 # This method will be used by the mock to replace requests.get
 def mocked_requests_get(*args, **kwargs):
     class MockResponse:
-        def __init__(self, json_data, status_code):
-            self.json_data = json_data
+        def __init__(self, page_content, status_code):
+            self.html = page_content
             self.status_code = status_code
-
-        def json(self):
-            return self.json_data
 
     if args[0] == 'https://en.wiktionary.org/w/index.php?printable=yes&title=pizza':
         return MockResponse(mocked_pizza_response(), 200)
@@ -76,9 +73,8 @@ class WiktionaryParserFactoryTestCase(unittest.TestCase):
     @mock.patch('requests.get', side_effect=mocked_requests_get)
     def test_request_page_not_found(self, magic_mock):
         parser_factory = WiktionaryParserFactory('en')
-        result = parser_factory.get_page('page_not_found')
-        expected_result = mocked_page_not_found_response()
-        self.assertRaises(PageNotFoundException, parser_factory.get_page, 'page_not_found')
+        with self.assertRaises(PageNotFoundException):
+            parser_factory.get_page('page_not_found')
 
 
 if __name__ == '__main__':
