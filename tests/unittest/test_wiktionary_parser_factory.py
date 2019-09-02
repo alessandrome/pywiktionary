@@ -16,7 +16,7 @@ class CustomParser(basic_parser.BasicParser):
 def mocked_requests_get(*args, **kwargs):
     class MockResponse:
         def __init__(self, page_content, status_code):
-            self.html = page_content
+            self.text = page_content
             self.status_code = status_code
 
     if args[0] == 'https://en.wiktionary.org/w/index.php?printable=yes&title=pizza':
