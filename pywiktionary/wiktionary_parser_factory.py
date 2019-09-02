@@ -38,7 +38,7 @@ class WiktionaryParserFactory:
         wiktionary_response = requests.get(self._format_url(language=language, title=title))
         if wiktionary_response.status_code == 404:
             raise PageNotFoundException
-        return self.default_parser_class(wiktionary_response.html)
+        return self.default_parser_class(wiktionary_response.text)
 
     def _format_url(self, language, title):
         return self._base_url.format(lang_code=language, page_title=title)
