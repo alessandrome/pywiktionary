@@ -1,4 +1,5 @@
 import copy
+import re
 
 from . import basic_parser
 from bs4 import BeautifulSoup
@@ -57,9 +58,9 @@ class EnglishParser(basic_parser.BasicParser):
                                 if get_examples:
                                     for li_example in example_list.find_all('dd'):
                                         if li_example.text.rstrip():
-                                            examples.append(li_example.text.rstrip())
+                                            examples.append(re.sub(r'\s+', ' ', li_example.text).strip())
                             meaning_list.append({
-                                'meaning': li_meaning.text.rstrip(),
+                                'meaning':  re.sub(r'\s+', ' ', li_meaning.text).strip(),
                                 'examples': examples
                             })
                     if get_empty_meaning_types or meaning_list:
