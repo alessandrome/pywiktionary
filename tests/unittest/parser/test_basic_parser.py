@@ -3,7 +3,7 @@ from pywiktionary.parsers import basic_parser
 
 
 def get_pizza_html_extract():
-    with open('../../file/html-responses/pizza-it.html', 'r') as pizza_html_file:
+    with open('tests/file/html-responses/pizza-it.html', 'r', encoding='utf-8') as pizza_html_file:
         pizza_html = pizza_html_file.read()
     return pizza_html
 
@@ -14,7 +14,7 @@ class BasicParseTestCase(unittest.TestCase):
         self.assertEqual(get_pizza_html_extract(), parser.html)
 
     def test_parse_method(self):
-        parser = basic_parser.BasicParser({})
+        parser = basic_parser.BasicParser(get_pizza_html_extract())
         self.assertRaises(NotImplementedError, parser.parse)
 
 
