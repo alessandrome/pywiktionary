@@ -2,9 +2,9 @@
 
 The Python library for wiktionary words
 
-## Version 0.0.2 (pre-alpha)
+## Version 0.1.0
 
-This is just a pre alpha that need so many enhancements and fixes, but could be a starting base to start a simple python library for [Wiktionary](https://wiktionary.org) words
+This is an alpha library to retrieve and parse [Wiktionary](https://wiktionary.org) word pages that will require enhancements and fixes
 
 
 ## Install
@@ -31,37 +31,21 @@ $ pip install .
 
 ## How to use
 
-First of all initialize the wiki parser factory (_pywiktionary.wiktionary_parser_factory.**WiktionaryParserFactory**_) with a supported language, then make the request with get_page() method passing the word you desire to get.
-If you need to retrieve more words at once, pass a list of words divided by the pipe symbol (**|**)
+Initialize the parser factory (_pywiktionary.wiktionary_parser_factory.**WiktionaryParserFactory**_) with a supported language, then make the request with get_page() method passing the word you desire to get.
 ```python
 from pywiktionary.wiktionary_parser_factory import WiktionaryParserFactory
 
 parser_factory = WiktionaryParserFactory(default_language='en')
-parser_factory_result = parser_factory.get_page('pizza')
+pizza_parser = parser_factory.get_page('pizza')
 ```
 
-Below how the factory result should be appear, where Wiktionary Example Response can be tested [here](https://en.wiktionary.org/wiki/Special:ApiSandbox#action=query&format=json&prop=extracts&titles=pizza):
-```json
-{
-  "response": <original wiktionary JSON response>,
-  "parsers": {
-    "pizza": <ParserObject for word 'pizza'>
-  }
-}
-```
-
-Based on how factory result is composed, here how to retrieve the parser:
-```python
-pizza_parser = parser_factory_result['parsers']['pizza']
-```
-
-Then to get info about the word use the parse() method of the parser object returned from WiktionaryParserFactory:
+Then to get data about the word use the **parse()** method of the parser object returned from WiktionaryParserFactory:
 ```python
 parsing_result = pizza_parser.parse()
 ```
 
-The result variable is dictionary containing the result of the wiktionary page parsing. Here the result for "pizza":
-```json
+The result variable is a dictionary containing the result of the wiktionary page parsing divided by type/subtype. Here the result for "pizza":
+```
 {
     "meanings": {
         "noun": [
@@ -85,20 +69,20 @@ This is the summary of above commented code:
 from pywiktionary.wiktionary_parser_factory import WiktionaryParserFactory
 
 parser_factory = WiktionaryParserFactory(default_language='en')
-parser_factory_result = parser_factory.get_page('pizza')
-pizza_parser = parser_factory_result['parsers']['pizza']
+pizza_parser = parser_factory.get_page('pizza')
 parsing_result = pizza_parser.parse()
 ```
 
 Yeah, yeah... i know it is beautiful and easy as idea, but this library require many development to enhance this system!
 
 
-### Supported languages
+### Supported languages (Language - Code)
  - English - en
  - Italian - it
  
 ## ToDo
 
+ - Surfable Software Documentation!
  - Implement a good system to select wiktionary language parser
  - Write a good human friend documentation! =)
  - Write some examples for humans!
