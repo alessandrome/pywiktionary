@@ -21,11 +21,18 @@ def get_pizza_meanings_result():
                 "meaning": "(uncountable) A baked Italian dish of a thinly rolled bread dough crust typically topped "
                            "before baking with tomato sauce, cheese, and other ingredients such as meat, vegetables "
                            "or fruit",
-                "examples": []
+                "examples": [
+                    "a slice of pizza",
+                    "a pizza pie",
+                    "Want to go out for pizza tonight?"
+                ]
             },
             {
                 "meaning": "(countable) A single instance of this dish",
-                "examples": []
+                "examples": [
+                    "He ate a whole pizza!",
+                    "Should we cook a frozen pizza for dinner?"
+                ]
             }
         ]
     }
@@ -60,7 +67,8 @@ class EnglishParserTestCase(unittest.TestCase):
 
     def test_return_empty_meaning_types(self):
         parser = english_parser.EnglishParser(html=get_pizza_en_html_extract())
-        self.assertListEqual(list(parser.get_meanings(get_empty_meaning_types=True).keys()), list(english_parser.SECTION_ID.keys()))
+        self.assertListEqual(list(parser.get_meanings(get_empty_meaning_types=True).keys()),
+                             list(english_parser.SECTION_ID.keys()))
 
 
 if __name__ == '__main__':
