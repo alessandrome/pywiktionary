@@ -6,6 +6,7 @@ import pywiktionary.parsers.english_parser
 import pywiktionary.parsers.italian_parser
 
 
+"""Language code by language"""
 LANGUAGE_CODES = {
     'italian': 'it',
     'it': 'it',
@@ -13,6 +14,7 @@ LANGUAGE_CODES = {
     'en': 'en'
 }
 
+"""Language Parser to use by default be language code"""
 LANGUAGE_PARSERS = {
     'it': pywiktionary.parsers.italian_parser.ItalianParser,
     'en': pywiktionary.parsers.english_parser.EnglishParser
@@ -63,4 +65,5 @@ class WiktionaryParserFactory:
 
 
 class PageNotFoundException(requests.RequestException):
+    """Exception return when a not found page has been looked for"""
     pass
