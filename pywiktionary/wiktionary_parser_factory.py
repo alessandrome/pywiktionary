@@ -1,9 +1,7 @@
 import requests
 
 import pywiktionary
-import pywiktionary.parsers.basic_parser
-import pywiktionary.parsers.english_parser
-import pywiktionary.parsers.italian_parser
+from pywiktionary import parsers
 
 
 """Language code by language"""
@@ -16,8 +14,8 @@ LANGUAGE_CODES = {
 
 """Language Parser to use by default be language code"""
 LANGUAGE_PARSERS = {
-    'it': pywiktionary.parsers.italian_parser.ItalianParser,
-    'en': pywiktionary.parsers.english_parser.EnglishParser
+    'it': parsers.ItalianParser,
+    'en': parsers.EnglishParser
 }
 
 
@@ -38,7 +36,7 @@ class WiktionaryParserFactory:
             if self.default_language in LANGUAGE_PARSERS:
                 self.default_parser_class = LANGUAGE_PARSERS[self.default_language]
             else:
-                self.default_parser_class = pywiktionary.parsers.basic_parser.BasicParser
+                self.default_parser_class = parsers.BasicParser
 
     def get_page(self, title, language=None):
         """Get a wiktionary page and
