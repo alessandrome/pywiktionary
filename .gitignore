@@ -113,3 +113,7 @@ venv.bak/
 *.njsproj
 *.sln
 *.sw?
+
+# Locally used files
+word-examples/
+manual_test.py
