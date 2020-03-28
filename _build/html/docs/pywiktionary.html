@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pywiktionary package &#8212; PyWiktionary 0.1.0 alpha documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="pywiktionary-package">
+<h1>pywiktionary package<a class="headerlink" href="#pywiktionary-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pywiktionary.parsers.html">pywiktionary.parsers package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pywiktionary.parsers.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pywiktionary.parsers.html#module-pywiktionary.parsers.basic_parser">pywiktionary.parsers.basic_parser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pywiktionary.parsers.html#module-pywiktionary.parsers.english_parser">pywiktionary.parsers.english_parser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pywiktionary.parsers.html#module-pywiktionary.parsers.italian_parser">pywiktionary.parsers.italian_parser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pywiktionary.parsers.html#module-pywiktionary.parsers">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pywiktionary.wiktionary_parser_factory">
+<span id="pywiktionary-wiktionary-parser-factory-module"></span><h2>pywiktionary.wiktionary_parser_factory module<a class="headerlink" href="#module-pywiktionary.wiktionary_parser_factory" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="pywiktionary.wiktionary_parser_factory.LANGUAGE_CODES">
+<code class="sig-prename descclassname">pywiktionary.wiktionary_parser_factory.</code><code class="sig-name descname">LANGUAGE_CODES</code><em class="property"> = {'en': 'en', 'english': 'en', 'it': 'it', 'italian': 'it'}</em><a class="headerlink" href="#pywiktionary.wiktionary_parser_factory.LANGUAGE_CODES" title="Permalink to this definition">¶</a></dt>
+<dd><p>Language Parser to use by default be language code</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="pywiktionary.wiktionary_parser_factory.PageNotFoundException">
+<em class="property">exception </em><code class="sig-prename descclassname">pywiktionary.wiktionary_parser_factory.</code><code class="sig-name descname">PageNotFoundException</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pywiktionary.wiktionary_parser_factory.PageNotFoundException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.exceptions.RequestException</span></code></p>
+<p>Exception return when a not found page has been looked for</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pywiktionary.wiktionary_parser_factory.WiktionaryParserFactory">
+<em class="property">class </em><code class="sig-prename descclassname">pywiktionary.wiktionary_parser_factory.</code><code class="sig-name descname">WiktionaryParserFactory</code><span class="sig-paren">(</span><em class="sig-param">default_language='en'</em>, <em class="sig-param">default_parser_class=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pywiktionary.wiktionary_parser_factory.WiktionaryParserFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to retrieve wiktionary pages to parse based on passed language</p>
+<dl class="method">
+<dt id="pywiktionary.wiktionary_parser_factory.WiktionaryParserFactory.get_page">
+<code class="sig-name descname">get_page</code><span class="sig-paren">(</span><em class="sig-param">title</em>, <em class="sig-param">language=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pywiktionary.wiktionary_parser_factory.WiktionaryParserFactory.get_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a wiktionary page and</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> (<em>string</em>) – Title or word of the wiktionary page to retrieve and parse</p></li>
+<li><p><strong>language</strong> – Override default language with desired language code to retrieve a wiktionary page from another language</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Parser class of selected language</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pywiktionary">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pywiktionary" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PyWiktionary</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Alessandro Mesti.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/docs/pywiktionary.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
