@@ -2,7 +2,7 @@
 
 The Python library for wiktionary words
 
-## Version 0.1.0
+## Version 0.1.1
 
 This is an alpha library to retrieve and parse [Wiktionary](https://wiktionary.org) word pages that will require enhancements and fixes
 
@@ -33,7 +33,7 @@ $ pip install .
 
 Initialize the parser factory (_pywiktionary.wiktionary_parser_factory.**WiktionaryParserFactory**_) with a supported language, then make the request with get_page() method passing the word you desire to get.
 ```python
-from pywiktionary.wiktionary_parser_factory import WiktionaryParserFactory
+from pywiktionary import WiktionaryParserFactory
 
 parser_factory = WiktionaryParserFactory(default_language='en')
 pizza_parser = parser_factory.get_page('pizza')
@@ -50,12 +50,19 @@ The result variable is a dictionary containing the result of the wiktionary page
     "meanings": {
         "noun": [
             {
-              "meaning": "(uncountable) A baked Italian dish of a thinly rolled bread dough crust typically topped before baking with tomato sauce, cheese, and other ingredients such as meat, vegetables or fruit",
-              "examples": []
+                "meaning": "(uncountable) A baked Italian dish of a thinly rolled bread dough crust typically topped before baking with tomato sauce, cheese, and other ingredients such as meat, vegetables or fruit",
+                "examples": [
+                    "a slice of pizza",
+                    "a pizza pie",
+                    "Want to go out for pizza tonight?"
+                ]
             },
             {
-              "meaning": "(countable) A single instance of this dish",
-              "examples": []
+                "meaning": "(countable) A single instance of this dish",
+                "examples": [
+                    "He ate a whole pizza!",
+                    "Should we cook a frozen pizza for dinner?"
+                ]
             }
         ]
     }
@@ -66,7 +73,7 @@ The result variable is a dictionary containing the result of the wiktionary page
 
 This is the summary of above commented code:
 ```python
-from pywiktionary.wiktionary_parser_factory import WiktionaryParserFactory
+from pywiktionary import WiktionaryParserFactory
 
 parser_factory = WiktionaryParserFactory(default_language='en')
 pizza_parser = parser_factory.get_page('pizza')
