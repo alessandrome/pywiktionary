@@ -1,1 +1,4 @@
 tests/file/**/* linguist-documentation
+make.bat linguist-documentation
+Makefile linguist-documentation
+docs/**/* linguist-documentation
