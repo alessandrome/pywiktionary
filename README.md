@@ -2,7 +2,7 @@
 
 The Python library for wiktionary words
 
-## Version 0.1.1
+## Version 0.1.2
 
 This is an alpha library to retrieve and parse [Wiktionary](https://wiktionary.org) word pages that will require enhancements and fixes
 
@@ -93,3 +93,7 @@ Yeah, yeah... i know it is beautiful and easy as idea, but this library require 
  - Implement a good system to select wiktionary language parser
  - Write a good human friend documentation! =)
  - Write some examples for humans!
+ 
+## Main Changes
+### 0.1.2
+- Add requirements in setup.py for distributed package under wheel and PyPI

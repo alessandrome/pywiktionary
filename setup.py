@@ -6,12 +6,16 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pywiktionary",
-    version="0.1.a1",
+    version="0.1.a2.post2",
     author="Alessandro Mesti",
     author_email="mesti.alessandro@gmail.com",
     description="Python library to retrieve wiktionary word definitions for different languages",
     long_description=long_description,
     long_description_content_type="text/markdown",
+    install_requires=[
+        'requests>=2,<3',
+        'BeautifulSoup4>=4',
+    ],
     project_urls=OrderedDict(
         (
             ("Code", "https://github.com/alessandrome/pywiktionary"),
