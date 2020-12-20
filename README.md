@@ -2,7 +2,7 @@
 
 The Python library for wiktionary words
 
-## Version 0.1.2
+## Version 0.2.0
 
 This is an alpha library to retrieve and parse [Wiktionary](https://wiktionary.org) word pages that will require enhancements and fixes
 
@@ -44,7 +44,7 @@ Then to get data about the word use the **parse()** method of the parser object 
 parsing_result = pizza_parser.parse()
 ```
 
-The result variable is a dictionary containing the result of the wiktionary page parsing divided by type/subtype. Here the result for "pizza":
+The result variable is a dictionary containing the result of the wiktionary page parsing divided by type/subtype. The meanings type categories are dynamically taken from the Wiktionary page in the wiktionary language, Here the result for "pizza":
 ```
 {
     "meanings": {
