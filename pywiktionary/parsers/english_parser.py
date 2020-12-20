@@ -40,7 +40,33 @@ class EnglishParser(basic_parser.BasicParser):
         word = {'meanings': self.get_meanings()}
         return word
 
-    def get_meanings(self, meaning_types=list(SECTION_ID.keys()), get_examples=True, get_empty_meaning_types=False):
+    def get_meanings(self, get_examples=True, get_empty_meaning_types=False):
+        return self._get_meanings(self._get_language_soup('English'), get_examples, get_empty_meaning_types)
+
+    def _get_meanings(self, soup, get_examples=True, get_empty_meaning_types=False):
+        meanings = {}
+        if soup:
+            soup_copy = copy.copy(soup)
+            meaning_list_tags = soup_copy.find_all('ol')
+            for ol_tag in meaning_list_tags:
+                meaning_list = []
+                type_tag = ol_tag.previous_element
+                while type_tag and (not type_tag.name or (not type_tag.name.startswith('h') and not type_tag.name == 'p')):
+                    type_tag = type_tag.previous_element
+                if type_tag.name == 'p':
+                    while type_tag and (not type_tag.name or not type_tag.name.startswith('h')):
+                        type_tag = type_tag.previous_element
+                    type_name = type_tag.get_text().lower()
+                    for li_meaning in ol_tag.find_all('li', recursive=False):
+                        examples = []
+                        meaning_list.append({
+                            'meaning':  re.sub(r'\s+', ' ', li_meaning.text).strip(),
+                            'examples': examples
+                        })
+                    meanings[type_name] = meaning_list
+        return meanings
+
+    def get_meaning_by_list(self, meaning_types=list(SECTION_ID.keys()), get_examples=True, get_empty_meaning_types=False):
         """Get english meanings of the word find in the Wiktionary HTML page contained in this parser
 
         :param list meaning_types: List containing meaning type keys to looking for. By default this list contain all foundable keys
@@ -48,10 +74,10 @@ class EnglishParser(basic_parser.BasicParser):
         :param boolean get_empty_meaning_types: Specify if empty meaning type keys should be included in the returned wiktionary. By default this is False
         :return dictionary: Return dictionary with all found meanings divided by meaning type keys. Each entry contain a list of dictionaries with two entry: 'meaning' which is a meaning of the word, and 'example' with a list of examples, if are present and should be returned, for the retrieved meaning.
         """
-        return self._get_meanings(self._get_language_soup('English'), meaning_types, get_examples,
+        return self._get_meanings_by_list(self._get_language_soup('English'), meaning_types, get_examples,
                                   get_empty_meaning_types)
 
-    def _get_meanings(self, soup, meaning_types=list(SECTION_ID.keys()), get_examples=True, get_empty_meaning_types=False):
+    def _get_meaning_by_list(self, soup, meaning_types=list(SECTION_ID.keys()), get_examples=True, get_empty_meaning_types=False):
         """Private function for public get_meanings method that get the soup parser as input with the other passed parameters of get_meanings function"""
         meanings = {}
         if get_empty_meaning_types:
