@@ -41,7 +41,37 @@ class ItalianParser(basic_parser.BasicParser):
         word = {'meanings': self.get_meanings()}
         return word
 
-    def get_meanings(self, meaning_types=list(SECTION_ID.keys()), get_examples=True, get_empty_meaning_types=False):
+    def get_meanings(self, get_examples=True, get_empty_meaning_types=False):
+        return self._get_meanings(self._get_language_soup('Italiano'), get_examples, get_empty_meaning_types)
+
+    def _get_meanings(self, soup, get_examples=True, get_empty_meaning_types=False):
+        meanings = {}
+        if soup:
+            soup_copy = copy.copy(soup)
+            type_tags = soup_copy.find_all('span', {'class': 'mw-headline'})
+            for type_tag in type_tags:
+                type_name = type_tag.get('id').lower()
+                dictionary_img_tag = type_tag.find('img')
+                if dictionary_img_tag and dictionary_img_tag.get('alt') and dictionary_img_tag.get('alt').startswith('Open book 01'):
+                    meaning_list = []
+                    meaning_ol = type_tag.find_next('ol')
+                    for li_meaning in meaning_ol.find_all('li', recursive=False):
+                        examples = []
+                        example_list = li_meaning.find('ul')
+                        if example_list:
+                            example_list = example_list.extract()
+                            if get_examples:
+                                for li_example in example_list.find_all('li'):
+                                    if li_example.text.rstrip():
+                                        examples.append(re.sub(r'\s+', ' ', li_example.text).strip())
+                        meaning_list.append({
+                            'meaning': re.sub(r'\s+', ' ', li_meaning.text).strip(),
+                            'examples': examples
+                        })
+                    meanings[type_name] = meaning_list
+        return meanings
+
+    def get_meaning_by_list(self, meaning_types=list(SECTION_ID.keys()), get_examples=True, get_empty_meaning_types=False):
         """Get italian meanings of the word find in the Wiktionary HTML page contained in this parser
 
         :param list meaning_types: List containing meaning type keys to looking for. By default this list contain all foundable keys
@@ -51,7 +81,7 @@ class ItalianParser(basic_parser.BasicParser):
         """
         return self._get_meanings(self._get_language_soup('Italiano'), meaning_types, get_examples, get_empty_meaning_types)
 
-    def _get_meanings(self, soup, meaning_types=list(SECTION_ID.keys()), get_examples=True, get_empty_meaning_types=False):
+    def _get_meaning_by_list(self, soup, meaning_types=list(SECTION_ID.keys()), get_examples=True, get_empty_meaning_types=False):
         """Private function for public get_meanings method that get the soup parser as input with the other passed parameters of get_meanings function"""
         meanings = {}
         if get_empty_meaning_types:
