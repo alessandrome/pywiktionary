@@ -44,7 +44,7 @@ Then to get data about the word use the **parse()** method of the parser object 
 parsing_result = pizza_parser.parse()
 ```
 
-The result variable is a dictionary containing the result of the wiktionary page parsing divided by type/subtype. Here the result for "pizza":
+The result variable is a dictionary containing the result of the wiktionary page parsing divided by type/subtype. The meanings type categories are dynamically taken from the Wiktionary page in the wiktionary language, Here the result for "pizza":
 ```
 {
     "meanings": {
