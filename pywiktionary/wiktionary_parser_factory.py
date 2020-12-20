@@ -1,6 +1,6 @@
 import requests
-
 import pywiktionary
+import urllib.parse
 from pywiktionary import parsers
 
 
@@ -59,7 +59,7 @@ class WiktionaryParserFactory:
         :param title: Title of page to retrieve
         :return string: Formatted wiktionary URL
         """
-        return self._base_url.format(lang_code=language, page_title=title)
+        return self._base_url.format(lang_code=language, page_title=urllib.parse.quote_plus(title))
 
 
 class PageNotFoundException(requests.RequestException):
