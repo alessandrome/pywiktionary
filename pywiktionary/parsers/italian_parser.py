@@ -55,19 +55,20 @@ class ItalianParser(basic_parser.BasicParser):
                 dictionary_img_tag = type_tag.find('img')
                 meaning_list = []
                 meaning_ol = type_tag.find_next('ol')
-                for li_meaning in meaning_ol.find_all('li', recursive=False):
-                    examples = []
-                    example_list = li_meaning.find('ul')
-                    if example_list:
-                        example_list = example_list.extract()
-                        if get_examples:
-                            for li_example in example_list.find_all('li'):
-                                if li_example.text.rstrip():
-                                    examples.append(re.sub(r'\s+', ' ', li_example.text).strip())
-                    meaning_list.append({
-                        'meaning': re.sub(r'\s+', ' ', li_meaning.text).strip(),
-                        'examples': examples
-                    })
+                if meaning_ol:
+                    for li_meaning in meaning_ol.find_all('li', recursive=False):
+                        examples = []
+                        example_list = li_meaning.find('ul')
+                        if example_list:
+                            example_list = example_list.extract()
+                            if get_examples:
+                                for li_example in example_list.find_all('li'):
+                                    if li_example.text.rstrip():
+                                        examples.append(re.sub(r'\s+', ' ', li_example.text).strip())
+                        meaning_list.append({
+                            'meaning': re.sub(r'\s+', ' ', li_meaning.text).strip(),
+                            'examples': examples
+                        })
                 meanings[type_name] = {'name': type_readable_name, 'meanings': meaning_list}
         return meanings
 
