@@ -40,8 +40,8 @@ class EnglishParser(basic_parser.BasicParser):
         word = {'meanings': self.get_meanings()}
         return word
 
-    def get_meanings(self, get_examples=True, get_empty_meaning_types=False):
-        return self._get_meanings(self._get_language_soup('English'), get_examples, get_empty_meaning_types)
+    def get_meanings(self, get_examples=True, get_empty_meaning_types=False, language_tag_id='English'):
+        return self._get_meanings(self._get_language_soup(language_tag_id), get_examples, get_empty_meaning_types)
 
     def _get_meanings(self, soup, get_examples=True, get_empty_meaning_types=False):
         meanings = {}
