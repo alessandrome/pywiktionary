@@ -40,8 +40,8 @@ class EnglishParser(basic_parser.BasicParser):
         word = {'meanings': self.get_meanings()}
         return word
 
-    def get_meanings(self, get_examples=True, get_empty_meaning_types=False):
-        return self._get_meanings(self._get_language_soup('English'), get_examples, get_empty_meaning_types)
+    def get_meanings(self, get_examples=True, get_empty_meaning_types=False, language_tag_id='English'):
+        return self._get_meanings(self._get_language_soup(language_tag_id), get_examples, get_empty_meaning_types)
 
     def _get_meanings(self, soup, get_examples=True, get_empty_meaning_types=False):
         meanings = {}
@@ -51,6 +51,7 @@ class EnglishParser(basic_parser.BasicParser):
             for ol_tag in meaning_list_tags:
                 meaning_list = []
                 type_tag = ol_tag.previous_element
+                type_readable_name = type_tag.get_text().strip()
                 while type_tag and (not type_tag.name or (not type_tag.name.startswith('h') and not type_tag.name == 'p')):
                     type_tag = type_tag.previous_element
                 if type_tag.name == 'p':
@@ -63,7 +64,7 @@ class EnglishParser(basic_parser.BasicParser):
                             'meaning':  re.sub(r'\s+', ' ', li_meaning.text).strip(),
                             'examples': examples
                         })
-                    meanings[type_name] = meaning_list
+                    meanings[type_name] = {'name': type_readable_name, 'meanings': meaning_list}
         return meanings
 
     def get_meaning_by_list(self, meaning_types=list(SECTION_ID.keys()), get_examples=True, get_empty_meaning_types=False):

@@ -2,7 +2,7 @@
 
 The Python library for wiktionary words
 
-## Version 0.2.0
+## Version 0.4.0
 
 This is an alpha library to retrieve and parse [Wiktionary](https://wiktionary.org) word pages that will require enhancements and fixes
 
